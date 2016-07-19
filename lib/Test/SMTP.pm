@@ -376,14 +376,20 @@ sub auth_ko {
     }
 }
 
-=item starttls_ok($name)
+=item starttls_ok($name, @sslargs)
 
 Start TLS conversation with the server. Pass if server said that it's OK to start TLS and the SSL negotiation went OK.
+
+Additional parameters will be passed to L<IO::Socket::SSL>:
+
+  $smtp->starttls_ok('server presents correct certificate',
+    SSL_verifycn_name => 'required-hostname.example.com',
+  );
 
 =cut
 
 sub starttls_ok {
-    my ($self, $name) = @_;
+    my ($self, $name, @sslargs) = @_;
     my $tb = __PACKAGE__->builder();
 
     if (not ($self->command('STARTTLS')->response() == Net::Cmd::CMD_OK)){
@@ -391,7 +397,7 @@ sub starttls_ok {
         $self->_smtp_diag;
         return;
     }
-    if (not $self->_convert_to_ssl()){
+    if (not $self->_convert_to_ssl(@sslargs)){
         $tb->ok(0, $name);
         $tb->diag('SSL: ' . IO::Socket::SSL::errstr());
         return;
@@ -400,21 +406,21 @@ sub starttls_ok {
     $tb->ok(1, $name);
 }
 
-=item starttls_ko($name)
+=item starttls_ko($name, @sslargs)
 
 Start TLS conversation with the server. Pass if server said that it's not OK to start TLS or if the SSL negotiation failed.
 
 =cut
 
 sub starttls_ko {
-    my ($self, $name) = @_;
+    my ($self, $name, @sslargs) = @_;
     my $tb = __PACKAGE__->builder();
 
     if (not ($self->command('STARTTLS')->response() == Net::Cmd::CMD_OK)){
         $tb->ok(1, $name);
 	return;
     }
-    if (not $self->_convert_to_ssl()){
+    if (not $self->_convert_to_ssl(@sslargs)){
         $tb->ok(1, $name);
 	return;
     }
@@ -425,12 +431,12 @@ sub starttls_ko {
 }
 
 sub _convert_to_ssl {
-    my ($self) = @_;
+    my ($self, @sslargs) = @_;
     require IO::Socket::SSL or die "starttls requires IO::Socket::SSL";
     # the socket is stored in ${*self}{'_ssl_sock'}.
     # If not, when starttls sub ends *$self is not tied to the SSL
     # socket anymore, instead, it's tied to the old socket.
-    my $ssl_sock = IO::Socket::SSL->new_from_fd($self->fileno)
+    my $ssl_sock = IO::Socket::SSL->new_from_fd($self->fileno, @sslargs)
       or return 0;
     ${*self}{'_ssl_sock'} = $ssl_sock;
     *$self = *$ssl_sock;
