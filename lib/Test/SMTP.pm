@@ -802,7 +802,10 @@ sub help_like {
     my ($self, $help_on, $expected, $name) = @_;
     my $tb = __PACKAGE__->builder();
 
-    $tb->like($self->help($help_on), $expected, $name);
+    my $msg = $self->help(
+      defined $help_on ? $help_on : ()
+    );
+    $tb->like($msg, $expected, $name);
 }
 
 =item help_unlike([HELP_ON], qr/REGEX/, $name)
@@ -816,7 +819,10 @@ sub help_unlike {
     my ($self, $help_on, $expected, $name) = @_;
     my $tb = __PACKAGE__->builder();
 
-    $tb->unlike($self->help($help_on), $expected, $name);
+    my $msg = $self->help(
+      defined $help_on ? $help_on : ()
+    );
+    $tb->unlike($msg, $expected, $name);
 }
 
 =item quit_ok($name)
