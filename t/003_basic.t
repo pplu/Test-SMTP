@@ -144,7 +144,7 @@ $c1->supports_unlike('SIZE', qr/9999/, 'Passes if size does not contain 9999');
 $c1->supports_cmp_ok('SIZE', '==', 1000, 'Passes if SIZE == 1000');
 $c1->supports_cmp_ok('SIZE', '!=', 9999, 'Passes if SIZE != 9999');
 
-$c1->mail_from_ko('temporary-450@failure.com', 'Passes if the mail_from fails');
+$c1->mail_from_ko('<temporary-450@failure.com>', 'Passes if the mail_from fails');
 $c1->code_is(450, 'Passes if temporary failure with code 450');
 $c1->code_isnt(444, 'Passes if temporary failure is not with code 444');
 $c1->message_like(qr/temporary failure for temporary-450\@failure.com/, 'Passes if expected message matches');
@@ -154,7 +154,7 @@ $c1->code_is_failure('Passes if code indicated some type of failure');
 $c1->code_isnt_success('Passes if code did not indicate success');
 $c1->code_isnt_permanent('Passes if code did not indicate permanent failure');
 
-$c1->mail_from_ko('permanent-550@failure.com', 'Passes if the mail_from fails');
+$c1->mail_from_ko('<permanent-550@failure.com>', 'Passes if the mail_from fails');
 $c1->code_is(550, 'Passes if temporary failure with code 550');
 $c1->code_isnt(555, 'Passes if temporary failure is not with code 555');
 $c1->message_like(qr/temporary failure for permanent-550\@failure.com/, 'Passes if expected message matches');
@@ -164,7 +164,7 @@ $c1->code_is_failure('Passes if code indicated some type of failure');
 $c1->code_isnt_success('Passes if code did not indicate success');
 $c1->code_is_permanent('Passes if code indicated temporary failure');
 
-$c1->mail_from_ok('success-220@success.com', 'Passes if the mail_from is ok');
+$c1->mail_from_ok('<success-220@success.com>', 'Passes if the mail_from is ok');
 $c1->code_is(220, 'Passes if code 220');
 $c1->code_isnt(222, 'Passes if is not with code 222');
 $c1->message_like(qr/success for success-220\@success.com/, 'Passes if expected message matches');
@@ -178,7 +178,7 @@ $c1->code_isnt_permanent('Passes if code did not indicate pemanent failure');
 # RCPT TO TESTS
 # 
 
-$c1->rcpt_to_ko('temporary-450@failure.com', 'Passes if the mail_from fails');
+$c1->rcpt_to_ko('<temporary-450@failure.com>', 'Passes if the mail_from fails');
 $c1->code_is(450, 'Passes if temporary failure with code 450');
 $c1->code_isnt(444, 'Passes if temporary failure is not with code 444');
 $c1->message_like(qr/temporary failure for temporary-450\@failure.com/, 'Passes if expected message matches');
@@ -188,7 +188,7 @@ $c1->code_is_failure('Passes if code indicated some type of failure');
 $c1->code_isnt_success('Passes if code did not indicate success');
 $c1->code_isnt_permanent('Passes if code did not indicate permanent failure');
 
-$c1->rcpt_to_ko('permanent-550@failure.com', 'Passes if the mail_from fails');
+$c1->rcpt_to_ko('<permanent-550@failure.com>', 'Passes if the mail_from fails');
 $c1->code_is(550, 'Passes if temporary failure with code 550');
 $c1->code_isnt(555, 'Passes if temporary failure is not with code 555');
 $c1->message_like(qr/temporary failure for permanent-550\@failure.com/, 'Passes if expected message matches');
@@ -199,7 +199,7 @@ $c1->code_isnt_success('Passes if code did not indicate success');
 $c1->code_is_permanent('Passes if code did indicated permanent failure');
 
 
-$c1->rcpt_to_ok('success-220@success.com', 'Passes if the mail_from is ok');
+$c1->rcpt_to_ok('<success-220@success.com>', 'Passes if the mail_from is ok');
 $c1->code_is(220, 'Passes if code 220');
 $c1->code_isnt(222, 'Passes if is not with code 222');
 $c1->message_like(qr/success for success-220\@success.com/, 'Passes if expected message matches');
@@ -224,8 +224,8 @@ $c1->rset_ok('Passes if RSET accepted');
 
 $c1->hello('mydomain.com');
 
-$c1->mail_from_ok('success-220@success.com');
-$c1->rcpt_to_ok('success-220@success.com');
+$c1->mail_from_ok('<success-220@success.com>');
+$c1->rcpt_to_ok('<success-220@success.com>');
 $c1->data_ok('Passes if data was succesful');
 $c1->datasend([
     "DO NOT ACCEPT THIS MESSAGE\n",

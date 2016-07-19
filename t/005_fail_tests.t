@@ -131,14 +131,14 @@ test_out('not ok 3 - Fails if server announces PIPELINING');
 test_fail(+1);
 $c1->supports_ko('PIPELINING', 'Fails if server announces PIPELINING');
 test_out('not ok 4 - Fails if the mail_from fails');
-$c1->mail_from_ok('temporary-450@failure.com', 'Fails if the mail_from fails');
+$c1->mail_from_ok('<temporary-450@failure.com>', 'Fails if the mail_from fails');
 test_fail(+1);
 test_out('not ok 5 - Fails if the mail_from fails');
 test_fail(+1);
-$c1->mail_from_ok('permanent-550@failure.com', 'Fails if the mail_from fails');
+$c1->mail_from_ok('<permanent-550@failure.com>', 'Fails if the mail_from fails');
 test_out('not ok 6 - Fails if the mail_from is ok');
 test_fail(+1);
-$c1->mail_from_ko('success-220@success.com', 'Fails if the mail_from is ok');
+$c1->mail_from_ko('<success-220@success.com>', 'Fails if the mail_from is ok');
 
 #
 # RCPT TO TESTS
@@ -146,7 +146,7 @@ $c1->mail_from_ko('success-220@success.com', 'Fails if the mail_from is ok');
 
 test_out('not ok 7 - Fails if the mail_from fails');
 test_fail(+1);
-$c1->rcpt_to_ok('temporary-450@failure.com', 'Fails if the mail_from fails');
+$c1->rcpt_to_ok('<temporary-450@failure.com>', 'Fails if the mail_from fails');
 test_out('not ok 8 - Fails because last code was temporary');
 test_fail(+1);
 $c1->code_isnt_temporary('Fails because last code was temporary');
@@ -164,7 +164,7 @@ $c1->code_isnt_failure('Fails because last code was temporary');
 
 test_out('not ok 12 - Fails if the mail_from fails');
 test_fail(+1);
-$c1->rcpt_to_ok('permanent-550@failure.com', 'Fails if the mail_from fails');
+$c1->rcpt_to_ok('<permanent-550@failure.com>', 'Fails if the mail_from fails');
 test_out('not ok 13 - Fails because last code was permanent');
 test_fail(+1);
 $c1->code_is_temporary('Fails because last code was permanent');
@@ -181,7 +181,7 @@ $c1->code_isnt_failure('Fails because last code was permanent');
 
 test_out('not ok 17 - Fails if the mail_from is ok');
 test_fail(+1);
-$c1->rcpt_to_ko('success-220@success.com', 'Fails if the mail_from is ok');
+$c1->rcpt_to_ko('<success-220@success.com>', 'Fails if the mail_from is ok');
 
 test_out('not ok 18 - Fails because last code was success');
 test_fail(+1);
@@ -235,8 +235,8 @@ my $c2 = Test::SMTP->connect_ko("connects to SMTP on $LOCAL_PORT",
                                 AutoHello => 1,
                                 ); 
 
-$c2->mail_from('success-220@success.com');
-$c2->rcpt_to('success-220@success.com');
+$c2->mail_from('<success-220@success.com>');
+$c2->rcpt_to('<success-220@success.com>');
 
 $c2->data;
 $c2->datasend([ "DO NOT ACCEPT THIS MESSAGE\n", "L2\n" ]);
