@@ -913,6 +913,10 @@ sub rcpt_to {
     http://www.pplusdomain.net/
     http://www.capside.com/
 
+=head1 CONTRIBUTORS
+
+Markus Benning (BENNING): Co-maintainer and code contributions 
+
 =head1 COPYRIGHT
 
 This program is free software; you can redistribute
