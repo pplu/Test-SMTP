@@ -3,6 +3,9 @@ package Test::SMTP;
 use strict;
 use warnings;
 
+# VERSION
+# ABSTRACT: Module for writing SMTP Server tests
+
 BEGIN {
     use Exporter ();
     use Carp;
@@ -17,10 +20,6 @@ BEGIN {
     @EXPORT_OK   = qw(plan);
     %EXPORT_TAGS = ();
 }
-
-=head1 NAME
-
-Test::SMTP - Module for writing SMTP Server tests
 
 =head1 SYNOPSIS
 
@@ -99,7 +98,7 @@ sub connect_ok {
     $tb->ok(defined $smtp, $name);
 
     if (not defined($smtp)){
-        return undef;
+        return;
     }
 
     bless $smtp, $class;
@@ -121,7 +120,7 @@ sub connect_ko {
     $tb->ok(not(defined $smtp), $name);
 
     if (not defined $smtp){
-        return undef;
+        return;
     }
 
     bless $smtp, $class;
