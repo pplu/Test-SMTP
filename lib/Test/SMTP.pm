@@ -12,8 +12,7 @@ BEGIN {
     use Net::SMTP_auth;
     use Test::Builder::Module;
 
-    use vars qw($VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
-    $VERSION     = '0.04';
+    use vars qw(@ISA @EXPORT @EXPORT_OK %EXPORT_TAGS);
     @ISA         = qw(Net::SMTP_auth Test::Builder::Module);
     #Give a hoot don't pollute, do not export more than needed by default
     @EXPORT      = qw();
