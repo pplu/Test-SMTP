@@ -3,5 +3,6 @@ MYMETA.yml
 Makefile*
 blib/
 pm_to_blib
-Test-SMTP-*.tar.gz
+Test-SMTP-*
 .build
+local/
